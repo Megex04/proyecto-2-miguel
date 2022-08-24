@@ -1,0 +1,1 @@
+create table if not exists ubicacion (ubicacion_id integer not null, ubicacion_nombre varchar(255), primary key (ubicacion_id));

@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: validarproducto
+  config:
+    import: "optional:configserver:http://config-server:8010"
+  cloud:
+    config:
+      enabled: true
+      uri: http://config-server:8010

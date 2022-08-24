@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: producto
+  labels:
+    app: producto
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: producto
+      labels:
+        app: producto
+    spec:
+      containers:
+        - name: producto
+          image: miguel04/producto:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8090
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: producto
