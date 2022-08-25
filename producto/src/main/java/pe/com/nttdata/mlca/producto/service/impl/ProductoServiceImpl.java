@@ -1,5 +1,6 @@
 package pe.com.nttdata.mlca.producto.service.impl;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pe.com.nttdata.mlca.producto.dao.IProductoDao;
@@ -28,6 +29,8 @@ public class ProductoServiceImpl implements IProductoService {
 
         return objProducto;
     }
+
+    @CircuitBreaker(name = "validarproductoCB", fallbackMethod = "fallValidarproductoCB")
     public String validarProducto(Producto producto) {
         ProductoCheckResponse productoCheckResponse = productoCheckClient.validarProducto(producto.getId());
 
