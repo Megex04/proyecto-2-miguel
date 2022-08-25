@@ -1,7 +1,9 @@
 package pe.com.nttdata.mlca.producto.service.impl;
 
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pe.com.nttdata.mlca.producto.dao.IProductoDao;
 import pe.com.nttdata.mlca.producto.model.Producto;
@@ -12,6 +14,7 @@ import pe.com.nttdata.mlca.productofeign.validar.producto.ProductoCheckResponse;
 import java.time.LocalDate;
 import java.util.List;
 
+@Slf4j
 @Service
 @AllArgsConstructor
 public class ProductoServiceImpl implements IProductoService {
@@ -31,7 +34,9 @@ public class ProductoServiceImpl implements IProductoService {
     }
 
     @CircuitBreaker(name = "validarproductoCB", fallbackMethod = "fallValidarproductoCB")
+    @Retry(name = "validarproductoRetry")
     public String validarProducto(Producto producto) {
+        log.info("Estoy en el metodo validarProducto");
         ProductoCheckResponse productoCheckResponse = productoCheckClient.validarProducto(producto.getId());
 
         if (productoCheckResponse.estaVencido()) {
@@ -39,6 +44,9 @@ public class ProductoServiceImpl implements IProductoService {
         }
 
         return "OK";
+    }
+    public String fallValidarproductoCB(Producto producto, Exception e) /*throws MethodArgumentNotValidException */ {
+        return "NO_OK";
     }
 
     public Producto modificarProducto(Producto producto) {

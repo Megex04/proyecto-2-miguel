@@ -63,5 +63,5 @@ resilience4j:
     instances:
       validarproductoRetry:
         registerHealthIndicator: true
-        maxRetryAttempts: 5
+        maxRetryAttempts: 7
         waitDuration: 3s
