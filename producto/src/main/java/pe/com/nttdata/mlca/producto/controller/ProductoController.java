@@ -36,8 +36,14 @@ public class ProductoController {
     public ResponseEntity<?> registrarProducto(@Valid @RequestBody Producto producto) {
         log.info("NUevo registro de producto {}", producto);
         Producto newProducto = productoService.registrarProducto(producto);
-        return new ResponseEntity<ProductoRequest>(new ProductoRequest(newProducto.getId(),producto.getNombre(), producto.getPeso(), producto.getCantidad(), producto.getPrecio(), producto.getFechaVencimiento()), HttpStatus.OK);
+        String resultado = productoService.validarProducto(newProducto);
+        log.info("Resultado: {}", resultado);
+        if (resultado.equals("OK")) {
+            return new ResponseEntity<ProductoRequest>(new ProductoRequest(newProducto.getId(), newProducto.getNombre(), newProducto.getPeso(), newProducto.getCantidad(), newProducto.getPrecio(), newProducto.getFechaVencimiento()), HttpStatus.OK);
+        }
+        return new ResponseEntity("Servicio validarProducto no disponible", HttpStatus.OK);
     }
+
     @PutMapping
     public ResponseEntity<?> modificarProducto(@Valid @RequestBody Producto producto) {
         log.info("Modificar datos del producto {}", producto);

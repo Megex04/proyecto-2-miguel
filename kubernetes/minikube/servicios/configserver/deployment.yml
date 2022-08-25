@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-server2
+  labels:
+    app: config-server2
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: config-server2
+      labels:
+        app: config-server2
+    spec:
+      containers:
+        - name: config-server2
+          image: miguel04/config-server2:latest
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 8010
+          env:
+            - name: SPRING_PROFILES_ACTIVE
+              value: kube
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: config-server2

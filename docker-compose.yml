@@ -79,6 +79,7 @@ services:
       - zipkin
       - postgres
       - rabbitmq
+      - config-server
 #      - eureka-server
   validarproducto:
     image: miguel04/validarproducto:latest
@@ -93,7 +94,18 @@ services:
     depends_on:
       - zipkin
       - postgres
+      - config-server
 #      - eureka-server
+  config-server:
+    image: miguel04/config-server2:latest
+    container_name: config-server2
+    ports:
+      - "8010:8010"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+
 networks:
   postgres:
     driver: bridge

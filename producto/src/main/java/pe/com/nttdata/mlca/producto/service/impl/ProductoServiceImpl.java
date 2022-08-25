@@ -26,13 +26,16 @@ public class ProductoServiceImpl implements IProductoService {
     public Producto registrarProducto(Producto producto) {
         Producto objProducto = productoDao.save(producto);
 
-        ProductoCheckResponse productoCheckResponse = productoCheckClient.validarProducto(objProducto.getId());
+        return objProducto;
+    }
+    public String validarProducto(Producto producto) {
+        ProductoCheckResponse productoCheckResponse = productoCheckClient.validarProducto(producto.getId());
 
         if (productoCheckResponse.estaVencido()) {
             throw new IllegalStateException("El producto esta vencido!!!");
         }
 
-        return objProducto;
+        return "OK";
     }
 
     public Producto modificarProducto(Producto producto) {

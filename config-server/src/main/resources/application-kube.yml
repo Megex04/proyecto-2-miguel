@@ -1,0 +1,12 @@
+server:
+  port: 8010
+spring:
+  application:
+    name: config-server
+  cloud:
+    config:
+      server:
+        git:
+          default-label: master
+          uri: https://github.com/Megex04/proyecto-2-miguel
+          search-paths: config-data/kube

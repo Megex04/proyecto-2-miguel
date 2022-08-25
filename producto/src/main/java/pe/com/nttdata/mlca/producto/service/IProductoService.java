@@ -9,6 +9,7 @@ public interface IProductoService {
 
     public List<Producto> listarProductos();
     public Producto registrarProducto(Producto producto);
+    public String validarProducto(Producto producto);
     public Producto modificarProducto(Producto producto);
     public int eliminarProducto(Long id);
     public Producto obtenerProducto(Long id);
