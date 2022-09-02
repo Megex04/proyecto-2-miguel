@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     password: 12345
-    url: jdbc:postgresql://postgres_2:5432/autenticacion
+    url: jdbc:postgresql://postgres:5432/autenticacion
     username: nttdata-mlca
   jpa:
     database : POSTGRESQL
