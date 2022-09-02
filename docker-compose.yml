@@ -53,6 +53,7 @@ services:
       - spring
     depends_on:
       - zipkin
+      - config-server
   apigateway:
     image: miguel04/apigateway2:latest
     container_name: apigateway_2
@@ -65,6 +66,7 @@ services:
     depends_on:
       - zipkin
       - eureka-server
+      - config-server
   producto:
     image: miguel04/producto:latest
     container_name: producto
