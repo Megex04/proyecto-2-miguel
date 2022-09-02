@@ -1,0 +1,41 @@
+server:
+  port: 8093
+spring:
+  datasource:
+    password: 12345
+    url: jdbc:postgresql://postgres_2:5431/autenticacion
+    username: nttdata-mlca
+  jpa:
+    database : POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true
+  zipkin:
+    base-url: http://zipkin_2:9411
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://eureka-server-2:8761/eureka
+    fetch-registry: true
+    register-with-eureka: true
+#    enabled: false
+
+jwt:
+  secret: secret
+
+admin-paths:
+  paths:
+    - uri: "/api/v1/producto"
+      method: "POST"
+    - uri: "/api/v1/producto"
+      method: "PUT"
+    - uri: "/api/v1/producto/{1}[1-9]+[0-9]*"
+      method: "DELETE"
+    - uri: "/api/v1/producto-check/{1}[1-9]+[0-9]*"
+      method: "GET"

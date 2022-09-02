@@ -42,29 +42,29 @@ services:
       - "15672:15672"
     networks:
       - spring
-#  eureka-server:
-#    image: miguel04/eureka-server2:latest
-#    container_name: eureka-server-2
-#    ports:
-#      - "8761:8761"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#  apigateway:
-#    image: miguel04/apigateway2:latest
-#    container_name: apigateway_2
-#    ports:
-#      - "8092:8092"
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=docker
-#    networks:
-#      - spring
-#    depends_on:
-#      - zipkin
-#      - eureka-server
+  eureka-server:
+    image: miguel04/eureka-server2:latest
+    container_name: eureka-server-2
+    ports:
+      - "8761:8761"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+  apigateway:
+    image: miguel04/apigateway2:latest
+    container_name: apigateway_2
+    ports:
+      - "8092:8092"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+    depends_on:
+      - zipkin
+      - eureka-server
   producto:
     image: miguel04/producto:latest
     container_name: producto
@@ -80,7 +80,8 @@ services:
       - postgres
       - rabbitmq
       - config-server
-#      - eureka-server
+      - eureka-server
+      - apigateway
   validarproducto:
     image: miguel04/validarproducto:latest
     container_name: validarproducto
@@ -95,7 +96,24 @@ services:
       - zipkin
       - postgres
       - config-server
-#      - eureka-server
+      - eureka-server
+      - apigateway
+  autenticacion:
+    image: miguel04/autenticacion2:latest
+    container_name: autenticacion2
+    ports:
+      - "8093:8093"
+    environment:
+      - SPRING_PROFILES_ACTIVE=docker
+    networks:
+      - spring
+      - postgres
+    depends_on:
+      - zipkin
+      - postgres
+      - config-server
+      - eureka-server
+      - apigateway
   config-server:
     image: miguel04/config-server2:latest
     container_name: config-server2
