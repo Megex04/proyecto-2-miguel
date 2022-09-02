@@ -2,8 +2,8 @@ spring:
   application:
     name: producto
   config:
-    import: "optional:configserver:http://config-server:8010"
+    import: "optional:configserver:http://config-server2:8010"
   cloud:
     config:
       enabled: true
-      uri: http://config-server:8010
+      uri: http://config-server2:8010

@@ -6,4 +6,4 @@ spring:
   cloud:
     config:
       enabled: true
-      uri: http://config-server:8010
+      uri: http://config-server2:8010
