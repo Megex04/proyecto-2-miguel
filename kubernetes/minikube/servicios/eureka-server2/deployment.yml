@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: eureka-server
-          image: miguel04/eureka-server2:latest
+          image: miguel04/eureka-server:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8761
