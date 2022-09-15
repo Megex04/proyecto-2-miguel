@@ -6,12 +6,15 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import pe.com.nttdata.mlca.producto.dao.IProductoDao;
+import pe.com.nttdata.mlca.producto.kafka.producer.ProductoProducer;
 import pe.com.nttdata.mlca.producto.model.Producto;
 import pe.com.nttdata.mlca.producto.service.IProductoService;
+import pe.com.nttdata.mlca.productofeign.notificacionkafka.NotificacionKafkaRequest;
 import pe.com.nttdata.mlca.productofeign.validar.producto.ProductoCheckClient;
 import pe.com.nttdata.mlca.productofeign.validar.producto.ProductoCheckResponse;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -22,6 +25,8 @@ public class ProductoServiceImpl implements IProductoService {
     private final IProductoDao productoDao;
 
     private final ProductoCheckClient productoCheckClient;
+
+    private final ProductoProducer productoProducer;
 
     public List<Producto> listarProductos() {
         return productoDao.findAll();
@@ -47,6 +52,18 @@ public class ProductoServiceImpl implements IProductoService {
     }
     public String fallValidarproductoCB(Producto producto, Exception e) /*throws MethodArgumentNotValidException */ {
         return "NO_OK";
+    }
+    public void registrarNotificacionKafka(Producto producto) {
+        LocalDate localDateProd = producto.getFechaVencimiento();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String stringFormato = localDateProd.format(formatter);
+
+        NotificacionKafkaRequest notificacionKafkaRequest = new NotificacionKafkaRequest(
+                producto.getId(),
+                producto.getNombre(),
+                String.format("Recuerda que el producto %s, vence el %s !!", producto.getNombre(), stringFormato)
+        );
+        productoProducer.enviarMensaje(notificacionKafkaRequest);
     }
 
     public Producto modificarProducto(Producto producto) {
