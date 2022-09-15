@@ -39,6 +39,7 @@ public class ProductoController {
         String resultado = productoService.validarProducto(newProducto);
         log.info("Resultado: {}", resultado);
         if (resultado.equals("OK")) {
+            productoService.registrarNotificacionKafka(newProducto);
             return new ResponseEntity<ProductoRequest>(new ProductoRequest(newProducto.getId(), newProducto.getNombre(), newProducto.getPeso(), newProducto.getCantidad(), newProducto.getPrecio(), newProducto.getFechaVencimiento()), HttpStatus.OK);
         }
         return new ResponseEntity("Servicio validarProducto no disponible", HttpStatus.OK);
