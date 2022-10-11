@@ -21,7 +21,7 @@ public class ProductoController {
 
     private final IProductoService productoService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> listarProductos() {
         List<Producto> productos = productoService.listarProductos();
         log.info("Listar los productos");
@@ -57,41 +57,41 @@ public class ProductoController {
         productoService.eliminarProducto(id);
     }
     //parametros por la URL
-    @GetMapping(params = "nombre")
+    @GetMapping(params = "nombre", value="/nombre")
     public ResponseEntity<?> listarProductosPorNombreComo(@RequestParam String nombre) {
         List<Producto> productos = productoService.listarProductosPorNombreComo(nombre);
         log.info("Listar productos por nombre");
         return new ResponseEntity<>(productos, productos.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
-    @GetMapping(params = {"peso1", "peso2"})
+    @GetMapping(params = {"peso1", "peso2"}, value="/peso-entre")
     public ResponseEntity<?> listarProductosPorPesoEntre(@RequestParam String peso1, @RequestParam String peso2) {
         List<Producto> productos = productoService.listarProductosPorPesoEntre(peso1, peso2);
         log.info("listar productos por peso (entre)");
         return new ResponseEntity<>(productos, productos.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params = "cantidad")
+    @GetMapping(params = "cantidad", value="/cantidad")
     public ResponseEntity<?> listarProductosPorCantidad(@RequestParam String cantidad) {
         List<Producto> productos = productoService.listarProductosPorCantidad(cantidad);
         log.info("Listar productos por cantidad");
         return new ResponseEntity<>(productos, productos.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params = {"cantidad1", "cantidad2"})
+    @GetMapping(params = {"cantidad1", "cantidad2"}, value="/cantidad-entre")
     public ResponseEntity<?> listarProductosPorCantidadEntre(@RequestParam String cantidad1, @RequestParam String cantidad2) {
         List<Producto> productos = productoService.listarProductosPorCantidadEntre(cantidad1, cantidad2);
         log.info("listar productos por cantidad (entre)");
         return new ResponseEntity<>(productos, productos.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params = {"precio1", "precio2"})
+    @GetMapping(params = {"precio1", "precio2"}, value="/precio-entre")
     public ResponseEntity<?> listarProductosPorPrecioEntre(@RequestParam String precio1, @RequestParam String precio2) {
         List<Producto> productos = productoService.listarProductosPorPrecioEntre(precio1, precio2);
         log.info("listar productos por precio (entre)");
         return new ResponseEntity<>(productos, productos.size() > 0 ? HttpStatus.OK : HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping(params="fechaVencimiento")
+    @GetMapping(params="fechaVencimiento", value="/vencimiento")
     public ResponseEntity<?> listarProductosPorFechaVencimiento(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate fechaVencimiento) {
         List<Producto> productos = productoService.listarProductosPorFechaVencimiento(fechaVencimiento);
         log.info("listar productos por fecha de vencimiento: ", fechaVencimiento);

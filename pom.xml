@@ -13,6 +13,7 @@
         <module>config-server</module>
         <module>autenticacion</module>
         <module>notificacionkafka</module>
+        <module>api-swagger</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>
@@ -48,6 +49,18 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-openfeign</artifactId>
 		</dependency>
+		<!--inicio Swagger ================================ -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+			<version>2.9.2</version>
+		</dependency>
+		<!-- fin Swagger ================================ -->
 	</dependencies>
 	<dependencyManagement>
 		<dependencies>

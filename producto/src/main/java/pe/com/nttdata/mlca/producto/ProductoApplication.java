@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
+import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @SpringBootApplication(
         scanBasePackages = {
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.PropertySources;
 @PropertySources({
         @PropertySource("classpath:productofeign-${spring.profiles.active}.properties")
 })
+@EnableSwagger2
 public class ProductoApplication {
     public static void main(String[] args) {
         SpringApplication.run(ProductoApplication.class, args);
